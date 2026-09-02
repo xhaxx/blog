@@ -1,0 +1,9 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const counts = new Map<string, number>();
+posts.flatMap((post) => post.data.tags).forEach((tag) => counts.set(tag, (counts.get(tag) ?? 0) + 1));
+const tags = [...counts.entries()].sort(([a], [b]) => a.localeCompare(b, 'zh-CN'));
+---
+<BaseLayout title="标签"><section class="shell page-intro"><p class="eyebrow">索引</p><h1>标签</h1><p>按主题找到相关的记录。</p></section><section class="shell section"><ul class="tag-cloud">{tags.map(([tag, count]) => <li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}<small>{count}</small></a></li>)}</ul></section></BaseLayout>

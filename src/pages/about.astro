@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config';
+---
+<BaseLayout title="关于"><section class="shell article"><header class="article-header"><p class="eyebrow">关于</p><h1>你好，我是 {site.author}。</h1><p class="article-summary">这是一个以写作为中心的个人博客。</p></header><div class="prose"><p>我在这里记录值得反复思考的事情：技术、阅读、创作，以及日常生活里的细小发现。</p><p>博客使用 Astro 与 Markdown 构建，文章内容保存在 Git 仓库中，并通过 Cloudflare Pages 自动发布。</p><p>想进一步了解我，可以访问<a href={site.mainSiteUrl}>个人主页</a>。</p></div></section></BaseLayout>
