@@ -28,18 +28,22 @@ npm run dev
 npm run build
 ```
 
-将更改推送至已连接 Cloudflare Pages 的 GitHub 仓库后，Cloudflare 会自动构建和发布。
+将更改推送至已连接 Cloudflare Workers Builds 的 GitHub 仓库后，Cloudflare 会自动构建和发布。
 
-## Cloudflare Pages
+## Cloudflare Workers Static Assets
 
-创建一个新的 Pages 项目并连接本仓库：
+本项目使用 Workers Static Assets 托管 Astro 生成的 `dist/` 文件；`wrangler.jsonc` 已声明资产目录，因此无需安装 `@astrojs/cloudflare` 或启用 SSR。
+
+在 Cloudflare Workers Builds 中连接本仓库后使用：
 
 - Production branch: `main`
 - Build command: `npm run build`
-- Build output directory: `dist`
-- Node.js version: `24`
+- Deploy command: `npx wrangler deploy`
+- Version command: `npx wrangler versions upload`
+- Root directory: `/`
+- Build variable: `NODE_VERSION=24.13.0`
 
-部署成功后，在这个 Pages 项目的 **Custom domains** 中添加 `blog.houkaijian.xyz`。不要把它添加到现有主页的 Pages 项目。
+部署成功后，在 Worker 的 **Settings > Domains & Routes** 中添加 `blog.houkaijian.xyz`。不要修改现有主页的域名路由。
 
 ## Giscus 评论
 
@@ -47,6 +51,6 @@ npm run build
 2. 安装 [giscus GitHub App](https://github.com/apps/giscus)。
 3. 打开 [giscus.app](https://giscus.app/)，选择仓库与 Discussion 分类，复制页面提供的 `repo`、`repo-id`、`category`、`category-id`。
 4. 复制 `.env.example` 为 `.env`，填入这四项；不要提交 `.env`。
-5. 在 Cloudflare Pages 的 Environment variables 中添加同名变量，然后重新部署。
+5. 在 Cloudflare Worker 的 **Settings > Variables and Secrets** 中添加同名变量，然后重新部署。
 
 未配置变量时，评论区域不会渲染，其他页面不受影响。
